@@ -1,10 +1,27 @@
 require "pry-byebug"
 
 def stock_picker(prices)
-  buy_price = prices.each_with_index.select{|price, index| index != (prices.length - 1)}.map{|price| price[0]}		
-	sell_price = prices.each_with_index.select{|price,index| index != 0}.map{|price| price[0]}
+	best_profit = 0
+	best_profit_day_index = ""
 
+	prices.each_with_index do |price1, day_index1| 
+		prices.each_with_index do |price2, day_index2|
+
+			profit = price2 - price1
+
+			if profit > best_profit && day_index2 > day_index1
+				best_profit = profit
+				best_profit_day_index = [day_index1, day_index2]
+			end
+
+		end
+	end
+
+	p best_profit
+	p best_profit_day_index
+	  
+	
 	binding.pry
 end
 
-stock_picker([17,3,6,9,15,8,6,1,10])
+stock_picker([13,11,5,9,2,8,9,12,1])
